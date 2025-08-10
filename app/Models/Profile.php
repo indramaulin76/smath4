@@ -1,0 +1,46 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+
+class Profile extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'about',
+        'description',
+        'vision',
+        'mission',
+        'featured_image',
+        'gallery',
+        'sections',
+        'established_year',
+        'principal_name',
+        'achievements',
+        'facilities',
+    ];
+
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'gallery' => 'array',
+        'sections' => 'array',
+        'achievements' => 'array',
+        'facilities' => 'array',
+    ];
+
+    /**
+     * Get the featured image URL attribute.
+     */
+    protected function featuredImageUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->featured_image ? asset('storage/' . $this->featured_image) : null,
+        );
+    }
+}
