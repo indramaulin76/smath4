@@ -17,31 +17,69 @@ class TeacherResource extends Resource
 {
     protected static ?string $model = Teacher::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
+    
+    protected static ?string $navigationLabel = 'Data Guru';
+    
+    protected static ?string $modelLabel = 'Guru';
+    
+    protected static ?string $pluralModelLabel = 'Data Guru';
+    
+    protected static ?string $navigationGroup = '👥 Data Sekolah';
+    
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Teacher Information')
+                Forms\Components\Section::make('👨‍🏫 Informasi Guru')
+                    ->description('Masukkan data lengkap guru untuk ditampilkan di website')
                     ->schema([
                         Forms\Components\TextInput::make('name')
+                            ->label('📝 Nama Lengkap')
                             ->required()
-                            ->maxLength(255),
+                            ->maxLength(255)
+                            ->placeholder('Contoh: Dr. Ahmad Sulaiman, S.Pd, M.Pd')
+                            ->helperText('Nama lengkap guru beserta gelar (jika ada)'),
+                            
                         Forms\Components\TextInput::make('title')
+                            ->label('📚 Mata Pelajaran / Jabatan')
                             ->required()
-                            ->maxLength(255),
+                            ->maxLength(255)
+                            ->placeholder('Contoh: Matematika / Wali Kelas XII IPA 1')
+                            ->helperText('Mata pelajaran yang diajar atau jabatan di sekolah'),
+                            
                         Forms\Components\FileUpload::make('photo')
-                            ->label('Photo')
+                            ->label('📸 Foto Profil Guru')
                             ->image()
                             ->directory('teachers')
                             ->disk('public')
                             ->visibility('public')
-                            ->maxSize(2048) // 2MB
-                            ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'image/gif'])
-                            ->required()
-                            ->live()
-                            ->columnSpanFull(),
+                            ->maxSize(3072)
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
+                            ->imageEditor()
+                            ->imageEditorAspectRatios([
+                                '1:1',   // Square - RECOMMENDED
+                                '4:5',   // Portrait
+                                '3:4',   // Standard Portrait
+                            ])
+                            ->helperText('📋 REKOMENDASI FOTO GURU: Rasio 1:1 (Square), Resolusi 400x400px minimum, Max 3MB, Format JPG/PNG/WEBP, Background polos/formal, Pencahayaan terang dan jelas')
+                            ->columnSpanFull()
+                            ->required(),
+                            
+                        Forms\Components\RichEditor::make('description')
+                            ->label('📋 Deskripsi / Bio Singkat')
+                            ->columnSpanFull()
+                            ->placeholder('Contoh: Guru Matematika berpengalaman 10 tahun, lulusan UGM, aktif dalam penelitian pendidikan...')
+                            ->helperText('Ceritakan pengalaman, prestasi, atau hal menarik tentang guru ini (opsional)')
+                            ->toolbarButtons([
+                                'bold',
+                                'italic',
+                                'underline',
+                                'bulletList',
+                                'orderedList',
+                            ]),
                     ])
                     ->columns(2),
             ]);

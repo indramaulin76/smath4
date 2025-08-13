@@ -14,6 +14,7 @@ class Teacher extends Model
         'name',
         'title',
         'photo',
+        'description',
     ];
 
     protected $casts = [

@@ -1,0 +1,66 @@
+/* Custom CSS for Admin Panel */
+
+/* Upload Progress Indicator */
+.filament-upload-progress .fi-fo-file-upload .fi-fo-file-upload-progress {
+    display: block !important;
+    opacity: 1 !important;
+    transition: all 0.3s ease;
+}
+
+/* Better upload button styling */
+.fi-fo-file-upload .fi-fo-file-upload-actions {
+    padding: 12px;
+    background: rgba(59, 130, 246, 0.05);
+    border-radius: 8px;
+    border: 2px dashed rgba(59, 130, 246, 0.3);
+    transition: all 0.3s ease;
+}
+
+.fi-fo-file-upload .fi-fo-file-upload-actions:hover {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.5);
+}
+
+/* Loading spinner for upload */
+.fi-fo-file-upload .fi-fo-file-upload-progress .animate-spin {
+    color: #3b82f6;
+}
+
+/* Success indicator */
+.fi-fo-file-upload .fi-fo-file-upload-file[data-state="complete"] {
+    background: rgba(34, 197, 94, 0.1);
+    border-color: rgba(34, 197, 94, 0.3);
+}
+
+/* Error indicator */
+.fi-fo-file-upload .fi-fo-file-upload-file[data-state="error"] {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+/* Teacher cards improvement */
+.aspect-square {
+    aspect-ratio: 1 / 1;
+}
+
+/* Line clamp fallback for older browsers */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Upload button text */
+.fi-fo-file-upload-cta-button .fi-btn-label {
+    font-weight: 500;
+}
+
+/* Progress bar styling */
+.fi-fo-file-upload-progress-bar {
+    height: 4px;
+    background: #3b82f6;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}

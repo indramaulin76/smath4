@@ -25,10 +25,18 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
-            ->path('admin')
+            ->path('smath-admin-secure-2025')  // Custom hidden path
             ->login()
+            ->brandName('🏫 SMA Tunas Harapan')
+            ->brandLogo(asset('images/logo-sma-tunas-harapan.png'))
+            ->brandLogoHeight('2.5rem')
+            ->favicon(asset('images/logo-sma-tunas-harapan.png'))
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Blue,
+                'success' => Color::Green,
+                'warning' => Color::Amber,
+                'danger' => Color::Red,
+                'info' => Color::Sky,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -37,9 +45,18 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
+                \App\Filament\Widgets\WelcomeWidget::class,
+                \App\Filament\Widgets\SchoolOverview::class,
                 Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
             ])
+            ->navigationGroups([
+                '🎯 Kelola Konten Website',
+                '🏫 Tentang Sekolah', 
+                '👥 Data Sekolah',
+                '🔐 Manajemen Admin',
+            ])
+            ->sidebarCollapsibleOnDesktop()
+            ->maxContentWidth('full')
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -50,9 +67,12 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                'admin.ip.whitelist',    // IP Whitelist Security
+                'admin.rate.limit',     // Rate Limiting
             ])
             ->authMiddleware([
                 Authenticate::class,
+                'admin.2fa',           // Two-Factor Authentication
             ]);
     }
 }

@@ -11,7 +11,16 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->web(append: [
+            \App\Http\Middleware\SecurityHeaders::class,
+        ]);
+        
+        // Register admin security middleware
+        $middleware->alias([
+            'admin.ip.whitelist' => \App\Http\Middleware\AdminIPWhitelist::class,
+            'admin.rate.limit' => \App\Http\Middleware\AdminRateLimit::class,
+            'admin.2fa' => \App\Http\Middleware\AdminTwoFactor::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
