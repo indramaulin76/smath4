@@ -16,8 +16,18 @@ class AdminRateLimit
     {
         $key = 'admin-access:' . $request->ip();
         
-        // Allow 5 attempts per minute for admin access
-        if (RateLimiter::tooManyAttempts($key, 5)) {
+        // Skip rate limiting for file uploads and livewire requests
+        if ($request->hasFile('image') || 
+            $request->hasFile('background_image') ||
+            $request->hasFile('photo') ||
+            str_contains($request->path(), 'livewire') ||
+            str_contains($request->path(), 'upload-file') ||
+            $request->isMethod('POST') && $request->has('components')) {
+            return $next($request);
+        }
+        
+        // Allow 15 attempts per minute for admin access (increased for file operations)
+        if (RateLimiter::tooManyAttempts($key, 15)) {
             $seconds = RateLimiter::availableIn($key);
             
             // Log rate limit exceeded

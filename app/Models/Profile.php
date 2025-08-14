@@ -11,18 +11,22 @@ class Profile extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title',
+        'school_name',
+        'description', // Short Description  
         'about',
-        'description',
         'vision',
         'mission',
+        'established_year',
+        'principal_name',
         'featured_image',
         'gallery',
         'sections',
-        'established_year',
-        'principal_name',
         'achievements',
         'facilities',
+        'address',
+        'phone',
+        'email',
+        'website',
     ];
 
     protected $casts = [

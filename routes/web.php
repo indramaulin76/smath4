@@ -4,11 +4,19 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ArticleController as PublicArticleController;
 use App\Http\Controllers\AdminTwoFactorController;
+use App\Http\Controllers\TestImageController;
+use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/articles', [PublicArticleController::class, 'index'])->name('articles.index');
 Route::get('/articles/{article}', [PublicArticleController::class, 'show'])->name('articles.show');
+
+// Contact form
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
+// Test image paths
+Route::get('/test-images', [TestImageController::class, 'test']);
 
 // Admin 2FA routes
 Route::middleware(['auth'])->group(function () {

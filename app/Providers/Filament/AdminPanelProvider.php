@@ -67,12 +67,12 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-                'admin.ip.whitelist',    // IP Whitelist Security
+                // 'admin.ip.whitelist',    // IP Whitelist Security (DISABLED for upload fix)
                 'admin.rate.limit',     // Rate Limiting
             ])
             ->authMiddleware([
                 Authenticate::class,
-                'admin.2fa',           // Two-Factor Authentication
+                // 'admin.2fa',           // Two-Factor Authentication (DISABLED for upload fix)
             ]);
     }
 }

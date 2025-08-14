@@ -1,17 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>SMA TUNAS HARAPAN</title>
+    <!-- Primary Meta Tags -->
+    <title>@yield('title', 'SMA Tunas Harapan - Sekolah Menengah Atas Berkualitas di Jakarta Barat')</title>
+    <meta name="title" content="@yield('title', 'SMA Tunas Harapan - Sekolah Menengah Atas Berkualitas di Jakarta Barat')">
+    <meta name="description" content="@yield('description', 'SMA Tunas Harapan adalah sekolah menengah atas berkualitas di Jakarta Barat dengan program unggulan dan fasilitas modern. Membentuk generasi unggul dan berakhlak mulia.')">
+    <meta name="keywords" content="SMA Tunas Harapan, sekolah menengah atas, Jakarta Barat, pendidikan berkualitas, program unggulan, sekolah swasta">
+    <meta name="author" content="SMA Tunas Harapan">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="@yield('title', 'SMA Tunas Harapan - Sekolah Menengah Atas Berkualitas di Jakarta Barat')">
+    <meta property="og:description" content="@yield('description', 'SMA Tunas Harapan adalah sekolah menengah atas berkualitas di Jakarta Barat dengan program unggulan dan fasilitas modern.')">
+    <meta property="og:image" content="{{ asset('images/logo-sma-tunas-harapan.png') }}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ url()->current() }}">
+    <meta property="twitter:title" content="@yield('title', 'SMA Tunas Harapan - Sekolah Menengah Atas Berkualitas di Jakarta Barat')">
+    <meta property="twitter:description" content="@yield('description', 'SMA Tunas Harapan adalah sekolah menengah atas berkualitas di Jakarta Barat dengan program unggulan dan fasilitas modern.')">
+    <meta property="twitter:image" content="{{ asset('images/logo-sma-tunas-harapan.png') }}">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ url()->current() }}">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ asset('images/logo-sma-tunas-harapan.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/logo-sma-tunas-harapan.png') }}">
 
-    <!-- Fonts -->
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "EducationalOrganization",
+        "name": "SMA Tunas Harapan",
+        "description": "Sekolah Menengah Atas berkualitas di Jakarta Barat dengan program unggulan dan fasilitas modern",
+        "url": "{{ url('/') }}",
+        "logo": "{{ asset('images/logo-sma-tunas-harapan.png') }}",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Komplek BNI 46, Pesing, Wijaya Kusuma",
+            "addressLocality": "Jakarta Barat",
+            "addressCountry": "ID"
+        },
+        "telephone": "(021) 5660066",
+        "email": "Smatunasharapanadm@gmail.com",
+        "sameAs": [
+            "https://www.instagram.com/smatunasharapan/",
+            "https://www.tiktok.com/@sma_toenhard",
+            "https://youtube.com/@smatunasharapan"
+        ]
+    }
+    </script>    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     

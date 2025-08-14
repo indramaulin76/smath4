@@ -10,7 +10,6 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ProfileResource extends Resource
 {
@@ -32,144 +31,193 @@ class ProfileResource extends Resource
     {
         return $form
             ->schema([
+                
+                // Basic Information Section
                 Forms\Components\Section::make('Basic Information')
+                    ->description('Informasi dasar tentang sekolah')
                     ->schema([
-                        Forms\Components\TextInput::make('title')
-                            ->label('School Name')
-                            ->placeholder('SMA Tunas Harapan')
-                            ->maxLength(255),
+                        Forms\Components\Grid::make(2)
+                            ->schema([
+                                Forms\Components\TextInput::make('school_name')
+                                    ->label('School Name')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->default('SMA TUNAS HARAPAN'),
+                                    
+                                Forms\Components\TextInput::make('established_year')
+                                    ->label('Established Year')
+                                    ->numeric()
+                                    ->minValue(1900)
+                                    ->maxValue(date('Y'))
+                                    ->default(1999),
+                                    
+                                Forms\Components\TextInput::make('principal_name')
+                                    ->label('Principal Name')
+                                    ->maxLength(255)
+                                    ->placeholder('Nama Kepala Sekolah'),
+                            ]),
+                            
                         Forms\Components\Textarea::make('description')
                             ->label('Short Description')
-                            ->rows(2)
-                            ->placeholder('Deskripsi singkat tentang sekolah')
-                            ->columnSpanFull(),
-                        Forms\Components\TextInput::make('established_year')
-                            ->label('Established Year')
-                            ->placeholder('2010')
-                            ->maxLength(4),
-                        Forms\Components\TextInput::make('principal_name')
-                            ->label('Principal Name')
-                            ->placeholder('Nama Kepala Sekolah')
-                            ->maxLength(255),
-                    ])
-                    ->columns(2),
+                            ->rows(3)
+                            ->maxLength(500)
+                            ->hint('Deskripsi singkat tentang sekolah (maksimal 500 karakter)'),
+                    ]),
 
+                // About School Section
                 Forms\Components\Section::make('About School')
+                    ->description('Informasi lengkap tentang sekolah')
                     ->schema([
                         Forms\Components\RichEditor::make('about')
                             ->label('About Us')
-                            ->required()
-                            ->columnSpanFull()
                             ->toolbarButtons([
-                                'bold', 'italic', 'underline', 'strike',
-                                'link', 'bulletList', 'orderedList',
-                                'h2', 'h3', 'paragraph', 'undo', 'redo',
-                            ]),
-                        Forms\Components\RichEditor::make('vision')
-                            ->label('Vision')
-                            ->required()
-                            ->columnSpanFull()
-                            ->toolbarButtons([
-                                'bold', 'italic', 'underline', 'strike',
-                                'link', 'bulletList', 'orderedList',
-                                'h2', 'h3', 'paragraph', 'undo', 'redo',
-                            ]),
-                        Forms\Components\RichEditor::make('mission')
-                            ->label('Mission')
-                            ->columnSpanFull()
-                            ->toolbarButtons([
-                                'bold', 'italic', 'underline', 'strike',
-                                'link', 'bulletList', 'orderedList',
-                                'h2', 'h3', 'paragraph', 'undo', 'redo',
+                                'bold',
+                                'italic',
+                                'underline',
+                                'strike',
+                                'link',
+                                'bulletList',
+                                'orderedList',
+                                'h2',
+                                'h3',
+                                'undo',
+                                'redo',
+                            ])
+                            ->hint('Ceritakan sejarah dan profil lengkap sekolah'),
+                            
+                        Forms\Components\Grid::make(2)
+                            ->schema([
+                                Forms\Components\RichEditor::make('vision')
+                                    ->label('Vision')
+                                    ->toolbarButtons([
+                                        'bold',
+                                        'italic',
+                                        'underline',
+                                        'bulletList',
+                                        'undo',
+                                        'redo',
+                                    ])
+                                    ->hint('Visi sekolah'),
+                                    
+                                Forms\Components\RichEditor::make('mission')
+                                    ->label('Mission')
+                                    ->toolbarButtons([
+                                        'bold',
+                                        'italic',
+                                        'underline',
+                                        'bulletList',
+                                        'orderedList',
+                                        'undo',
+                                        'redo',
+                                    ])
+                                    ->hint('Misi sekolah'),
                             ]),
                     ]),
 
+                // Media Section
                 Forms\Components\Section::make('Media')
+                    ->description('Gambar dan galeri sekolah')
                     ->schema([
                         Forms\Components\FileUpload::make('featured_image')
                             ->label('Featured Image')
-                            ->image()
                             ->directory('profile')
-                            ->disk('public')
-                            ->visibility('public')
-                            ->maxSize(2048)
-                            ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'image/gif'])
-                            ->helperText('Gambar utama untuk profil sekolah'),
+                            ->image()
+                            ->imageEditor()
+                            ->imageEditorAspectRatios([
+                                '16:9',
+                                '4:3',
+                                '1:1',
+                            ])
+                            ->maxSize(3072)
+                            ->hint('Gambar utama untuk profil sekolah')
+                            ->helperText('📐 Rekomendasi rasio: 16:9 (landscape) untuk tampilan terbaik. Ukuran maksimal 3MB. Resolusi ideal: 1920x1080px'),
+                            
                         Forms\Components\FileUpload::make('gallery')
                             ->label('School Gallery')
-                            ->image()
                             ->directory('profile/gallery')
-                            ->disk('public')
-                            ->visibility('public')
-                            ->multiple()
-                            ->maxFiles(15)
-                            ->maxSize(2048)
-                            ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'image/gif'])
-                            ->helperText('Upload foto-foto sekolah (maksimal 15 foto)')
-                            ->columnSpanFull(),
-                    ])
-                    ->columns(2),
-
-                Forms\Components\Section::make('Content Sections')
-                    ->schema([
-                        Forms\Components\Repeater::make('sections')
-                            ->schema([
-                                Forms\Components\TextInput::make('title')
-                                    ->required()
-                                    ->placeholder('Contoh: Fasilitas Unggulan'),
-                                Forms\Components\RichEditor::make('content')
-                                    ->required()
-                                    ->placeholder('Tulis konten untuk section ini...')
-                                    ->toolbarButtons([
-                                        'bold', 'italic', 'underline', 'strike',
-                                        'link', 'bulletList', 'orderedList',
-                                        'paragraph', 'undo', 'redo',
-                                    ])
-                                    ->columnSpanFull(),
+                            ->image()
+                            ->imageEditor()
+                            ->imageEditorAspectRatios([
+                                '16:9',
+                                '4:3',
+                                '3:2',
+                                '1:1',
                             ])
-                            ->columns(1)
-                            ->defaultItems(0)
-                            ->addActionLabel('Add Content Section')
-                            ->helperText('Tambahkan section konten dengan judul dan paragraf')
-                            ->columnSpanFull(),
+                            ->multiple()
+                            ->reorderable()
+                            ->maxFiles(15)
+                            ->maxSize(3072)
+                            ->hint('Upload foto-foto sekolah (maksimal 15 foto)')
+                            ->helperText('📐 Rekomendasi rasio: 4:3 atau 16:9 untuk galeri. Resolusi ideal: 1200x900px (4:3) atau 1200x675px (16:9). Max 3MB per foto'),
                     ]),
 
-                Forms\Components\Section::make('Achievements & Facilities')
+                // Contact Information
+                Forms\Components\Section::make('Contact Information')
+                    ->description('Informasi kontak sekolah')
                     ->schema([
-                        Forms\Components\Repeater::make('achievements')
+                        Forms\Components\Grid::make(2)
                             ->schema([
-                                Forms\Components\TextInput::make('title')
-                                    ->required()
-                                    ->placeholder('Juara 1 Lomba...')
-                                    ->columnSpan(2),
-                                Forms\Components\TextInput::make('year')
-                                    ->required()
-                                    ->placeholder('2024')
-                                    ->maxLength(4),
-                                Forms\Components\Textarea::make('description')
-                                    ->placeholder('Deskripsi prestasi...')
-                                    ->columnSpanFull(),
-                            ])
-                            ->columns(3)
-                            ->defaultItems(0)
-                            ->addActionLabel('Add Achievement')
-                            ->helperText('Tambahkan prestasi-prestasi sekolah'),
+                                Forms\Components\Textarea::make('address')
+                                    ->label('Alamat')
+                                    ->rows(3)
+                                    ->maxLength(500),
+                                    
+                                Forms\Components\TextInput::make('phone')
+                                    ->label('Telepon')
+                                    ->tel()
+                                    ->maxLength(20),
+                                    
+                                Forms\Components\TextInput::make('email')
+                                    ->label('Email')
+                                    ->email()
+                                    ->maxLength(255),
+                                    
+                                Forms\Components\TextInput::make('website')
+                                    ->label('Website')
+                                    ->url()
+                                    ->maxLength(255),
+                            ]),
+                    ]),
 
-                        Forms\Components\Repeater::make('facilities')
+                // Achievements & Facilities
+                Forms\Components\Section::make('Achievements & Facilities')
+                    ->description('Prestasi dan fasilitas sekolah')
+                    ->schema([
+                        Forms\Components\Grid::make(2)
                             ->schema([
-                                Forms\Components\TextInput::make('name')
-                                    ->required()
-                                    ->placeholder('Laboratorium Komputer'),
-                                Forms\Components\Textarea::make('description')
-                                    ->placeholder('Deskripsi fasilitas...')
-                                    ->columnSpanFull(),
-                            ])
-                            ->columns(1)
-                            ->defaultItems(0)
-                            ->addActionLabel('Add Facility')
-                            ->helperText('Tambahkan fasilitas-fasilitas sekolah'),
-                    ])
-                    ->columns(2),
+                                Forms\Components\Repeater::make('achievements')
+                                    ->label('Achievements')
+                                    ->schema([
+                                        Forms\Components\TextInput::make('title')
+                                            ->label('Prestasi')
+                                            ->required(),
+                                        Forms\Components\TextInput::make('year')
+                                            ->label('Tahun')
+                                            ->numeric(),
+                                        Forms\Components\Textarea::make('description')
+                                            ->label('Deskripsi')
+                                            ->rows(2),
+                                    ])
+                                    ->addActionLabel('Add Achievement')
+                                    ->collapsed()
+                                    ->itemLabel(fn (array $state): ?string => $state['title'] ?? null),
+                                    
+                                Forms\Components\Repeater::make('facilities')
+                                    ->label('Facilities')
+                                    ->schema([
+                                        Forms\Components\TextInput::make('name')
+                                            ->label('Nama Fasilitas')
+                                            ->required(),
+                                        Forms\Components\Textarea::make('description')
+                                            ->label('Deskripsi')
+                                            ->rows(2),
+                                    ])
+                                    ->addActionLabel('Add Facility')
+                                    ->collapsed()
+                                    ->itemLabel(fn (array $state): ?string => $state['name'] ?? null),
+                            ]),
+                    ]),
+                    
             ]);
     }
 
@@ -178,38 +226,33 @@ class ProfileResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('featured_image')
-                    ->disk('public')
-                    ->square()
+                    ->label('Featured Image')
+                    ->circular()
                     ->size(60),
-                Tables\Columns\TextColumn::make('title')
+                    
+                Tables\Columns\TextColumn::make('school_name')
                     ->label('School Name')
                     ->searchable()
-                    ->sortable()
-                    ->weight('bold'),
-                Tables\Columns\TextColumn::make('description')
-                    ->limit(50)
-                    ->searchable()
-                    ->toggleable(),
+                    ->sortable(),
+                    
                 Tables\Columns\TextColumn::make('established_year')
-                    ->label('Est. Year')
-                    ->sortable()
-                    ->toggleable(),
+                    ->label('Established')
+                    ->sortable(),
+                    
                 Tables\Columns\TextColumn::make('principal_name')
                     ->label('Principal')
-                    ->searchable()
-                    ->toggleable(),
-                Tables\Columns\TextColumn::make('created_at')
+                    ->searchable(),
+                    
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Last Updated')
                     ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -229,6 +272,7 @@ class ProfileResource extends Resource
     {
         return [
             'index' => Pages\ListProfiles::route('/'),
+            'create' => Pages\CreateProfile::route('/create'),
             'edit' => Pages\EditProfile::route('/{record}/edit'),
         ];
     }

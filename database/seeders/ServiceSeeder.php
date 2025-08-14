@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Service;
 
 class ServiceSeeder extends Seeder
 {
@@ -12,19 +13,24 @@ class ServiceSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Service::create([
-            'title' => 'Implementasi Kurikulum Merdeka',
-            'description' => 'Menerapkan Kurikulum Merdeka untuk mendorong pembelajaran yang fleksibel, berpusat pada siswa, dan membentuk karakter melalui projek nyata dan penilaian holistik.',
+        Service::create([
+            'title' => 'Pendidikan Berkualitas',
+            'description' => 'Memberikan pendidikan berkualitas tinggi dengan kurikulum yang komprehensif dan metode pembelajaran yang inovatif.'
         ]);
 
-        \App\Models\Service::create([
-            'title' => 'Pembiasaan Sholat Dhuha',
-            'description' => 'Program ini membiasakan siswa untuk melaksanakan Sholat Dhuha secara rutin di sekolah sebagai bentuk pembinaan spiritual, penanaman kedisiplinan, dan pembentukan karakter religius sejak dini.',
+        Service::create([
+            'title' => 'Fasilitas Lengkap',
+            'description' => 'Dilengkapi dengan fasilitas modern seperti laboratorium komputer, perpustakaan, dan ruang kelas yang nyaman.'
         ]);
 
-        \App\Models\Service::create([
-            'title' => 'Tahsin & Tahfidz Al-Qur’an',
-            'description' => 'Program ini bertujuan meningkatkan kemampuan membaca Al-Qur’an dengan baik dan benar (tahsin), serta menghafalkan ayat-ayat pilihan (tahfidz), guna membentuk pribadi yang religius dan cinta Al-Qur’an.',
+        Service::create([
+            'title' => 'Tenaga Pendidik Profesional',
+            'description' => 'Didukung oleh tenaga pendidik yang profesional, berpengalaman, dan memiliki dedikasi tinggi.'
+        ]);
+
+        Service::create([
+            'title' => 'Ekstrakurikuler Beragam',
+            'description' => 'Menyediakan berbagai kegiatan ekstrakurikuler untuk mengembangkan bakat dan minat siswa.'
         ]);
     }
 }

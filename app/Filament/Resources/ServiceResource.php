@@ -33,8 +33,32 @@ class ServiceResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('title')->required(),
-                Forms\Components\Textarea::make('description')->required(),
+                Forms\Components\TextInput::make('title')
+                    ->label('📋 Judul Program')
+                    ->required()
+                    ->hint('Nama program unggulan (contoh: Program Olimpiade Sains)')
+                    ->maxLength(255),
+                    
+                Forms\Components\FileUpload::make('image')
+                    ->label('🖼️ Gambar Program')
+                    ->directory('services')
+                    ->image()
+                    ->imageEditor()
+                    ->imageEditorAspectRatios([
+                        '16:9',
+                        '4:3', 
+                        '1:1',
+                    ])
+                    ->maxSize(3072)
+                    ->hint('Upload gambar program (max 3MB). Aspect ratio 16:9 recommended.')
+                    ->helperText('Gambar akan ditampilkan di halaman utama website'),
+                    
+                Forms\Components\Textarea::make('description')
+                    ->label('📝 Deskripsi Program')
+                    ->required()
+                    ->rows(4)
+                    ->hint('Jelaskan detail program unggulan sekolah')
+                    ->maxLength(500),
             ]);
     }
 
@@ -42,8 +66,27 @@ class ServiceResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title'),
-                Tables\Columns\TextColumn::make('description')->limit(50),
+                Tables\Columns\ImageColumn::make('image')
+                    ->label('🖼️ Gambar')
+                    ->circular()
+                    ->size(60)
+                    ->defaultImageUrl(url('images/services.jpg')),
+                    
+                Tables\Columns\TextColumn::make('title')
+                    ->label('📋 Judul Program')
+                    ->searchable()
+                    ->sortable(),
+                    
+                Tables\Columns\TextColumn::make('description')
+                    ->label('📝 Deskripsi')
+                    ->limit(80)
+                    ->searchable(),
+                    
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('📅 Dibuat')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
