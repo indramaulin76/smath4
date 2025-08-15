@@ -65,7 +65,20 @@ php artisan migrate --force
 
 # Storage link
 echo -e "${YELLOW}🔗 Creating storage link...${NC}"
+# Remove existing link first
+if [ -L "public/storage" ]; then
+    rm public/storage
+fi
 php artisan storage:link
+
+# Create necessary storage directories
+mkdir -p storage/app/public/teachers
+mkdir -p storage/app/public/articles  
+mkdir -p storage/app/public/services
+mkdir -p storage/app/public/profile
+mkdir -p storage/app/public/hero-sections
+mkdir -p storage/app/public/hero-backgrounds
+mkdir -p storage/app/public/livewire-tmp
 
 # Cache optimizations
 echo -e "${YELLOW}🚀 Caching for performance...${NC}"
@@ -80,6 +93,14 @@ chmod -R 755 storage bootstrap/cache
 chmod -R 775 storage/app/public
 chmod -R 775 storage/framework
 chmod -R 775 storage/logs
+# Set specific permissions for upload directories
+chmod -R 775 storage/app/public/teachers
+chmod -R 775 storage/app/public/articles
+chmod -R 775 storage/app/public/services
+chmod -R 775 storage/app/public/profile
+chmod -R 775 storage/app/public/hero-sections
+chmod -R 775 storage/app/public/hero-backgrounds
+chmod -R 775 storage/app/public/livewire-tmp
 
 # 7. Security checks
 echo -e "${YELLOW}🛡️  Security checks...${NC}"
