@@ -1,0 +1,70 @@
+services:
+  app:
+    build: .
+    container_name: sma-tunas-harapan
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - APP_ENV=production
+      - APP_DEBUG=false
+      - DB_HOST=database
+      - DB_DATABASE=sma_tunas_harapan
+      - DB_USERNAME=root
+      - DB_PASSWORD=password
+      - CACHE_DRIVER=redis
+      - SESSION_DRIVER=redis
+      - REDIS_HOST=redis
+    volumes:
+      - ./storage:/var/www/html/storage
+      - ./public/storage:/var/www/html/public/storage
+    depends_on:
+      - database
+      - redis
+    networks:
+      - sma-network
+
+  database:
+    image: mysql:8.0
+    container_name: sma-database
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: sma_tunas_harapan
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/backups:/backups
+    ports:
+      - "3306:3306"
+    networks:
+      - sma-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: sma-redis
+    volumes:
+      - redis_data:/data
+    networks:
+      - sma-network
+
+  # Optional: PHPMyAdmin for database management
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: sma-phpmyadmin
+    environment:
+      PMA_HOST: database
+      PMA_USER: root
+      PMA_PASSWORD: password
+    ports:
+      - "8080:80"
+    depends_on:
+      - database
+    networks:
+      - sma-network
+
+volumes:
+  mysql_data:
+  redis_data:
+
+networks:
+  sma-network:
+    driver: bridge
