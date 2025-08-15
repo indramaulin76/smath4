@@ -3,73 +3,58 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TeacherResource\Pages;
-use App\Filament\Resources\TeacherResource\RelationManagers;
 use App\Models\Teacher;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class TeacherResource extends Resource
+class TeacherResourceSimple extends Resource
 {
     protected static ?string $model = Teacher::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
-    
-    protected static ?string $navigationLabel = 'Data Guru';
-    
+    protected static ?string $navigationLabel = 'Data Guru (Simple)';
     protected static ?string $modelLabel = 'Guru';
-    
     protected static ?string $pluralModelLabel = 'Data Guru';
-    
     protected static ?string $navigationGroup = '👥 Data Sekolah';
-    
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Section::make('👨‍🏫 Informasi Guru')
-                    ->description('Masukkan data lengkap guru untuk ditampilkan di website')
+                    ->description('Form sederhana untuk input data guru')
                     ->schema([
                         Forms\Components\TextInput::make('name')
-                            ->label('📝 Nama Lengkap')
+                            ->label('Nama Lengkap')
                             ->required()
                             ->maxLength(255)
-                            ->placeholder('Contoh: Dr. Ahmad Sulaiman, S.Pd, M.Pd')
-                            ->helperText('Nama lengkap guru beserta gelar (jika ada)'),
+                            ->placeholder('Contoh: Dr. Ahmad Sulaiman, S.Pd, M.Pd'),
                             
                         Forms\Components\TextInput::make('title')
-                            ->label('📚 Mata Pelajaran / Jabatan')
+                            ->label('Mata Pelajaran / Jabatan')
                             ->required()
                             ->maxLength(255)
-                            ->placeholder('Contoh: Matematika / Wali Kelas XII IPA 1')
-                            ->helperText('Mata pelajaran yang diajar atau jabatan di sekolah'),
+                            ->placeholder('Contoh: Matematika / Wali Kelas XII IPA 1'),
                             
                         Forms\Components\FileUpload::make('photo')
-                            ->label('📸 Foto Profil Guru')
+                            ->label('Foto Profil Guru')
                             ->image()
                             ->directory('teachers')
                             ->disk('public')
-                            ->visibility('public')
                             ->maxSize(3072)
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg'])
-                            ->helperText('Upload foto guru (JPG/PNG, max 3MB)')
-                            ->columnSpanFull()
                             ->nullable(),
                             
                         Forms\Components\Textarea::make('description')
-                            ->label('📋 Deskripsi / Bio Singkat')
-                            ->columnSpanFull()
+                            ->label('Deskripsi / Bio Singkat')
                             ->rows(4)
-                            ->placeholder('Contoh: Guru Matematika berpengalaman 10 tahun, lulusan UGM, aktif dalam penelitian pendidikan...')
-                            ->helperText('Ceritakan pengalaman, prestasi, atau hal menarik tentang guru ini (opsional)'),
+                            ->placeholder('Ceritakan pengalaman, prestasi, atau hal menarik tentang guru ini')
+                            ->nullable(),
                     ])
-                    ->columns(2),
+                    ->columns(1),
             ]);
     }
 
@@ -79,27 +64,29 @@ class TeacherResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->label('Nama'),
+                    
                 Tables\Columns\TextColumn::make('title')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->label('Jabatan'),
+                    
                 Tables\Columns\ImageColumn::make('photo')
                     ->disk('public')
-                    ->square(),
+                    ->square()
+                    ->size(50)
+                    ->label('Foto'),
+                    
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('Dibuat'),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
@@ -109,14 +96,7 @@ class TeacherResource extends Resource
                 ]),
             ]);
     }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
+    
     public static function getPages(): array
     {
         return [
