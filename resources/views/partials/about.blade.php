@@ -6,12 +6,12 @@
             <h2 class="text-4xl lg:text-5xl font-bold text-gray-800 mb-6">Tentang Sekolah</h2>
             <div class="w-24 h-1 bg-blue-600 mx-auto mb-8"></div>
             <p class="text-lg lg:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-                {{ $profile->about ?? 'Informasi tentang sekolah tidak tersedia.' }}
+                {{ ($profile && $profile->about) ? $profile->about : 'Informasi tentang sekolah tidak tersedia.' }}
             </p>
         </div>
 
         {{-- Featured Image --}}
-        @if($profile->featured_image)
+        @if($profile && $profile->featured_image)
         <div class="mb-20">
             <div class="rounded-2xl shadow-xl overflow-hidden">
                 <div class="relative">
@@ -39,7 +39,7 @@
                     <h3 class="text-3xl font-bold text-gray-800">Visi</h3>
                 </div>
                 <div class="text-gray-700 leading-relaxed text-lg">
-                    {!! $profile->vision ? nl2br(e($profile->vision)) : 'Visi sekolah belum diisi.' !!}
+                    {!! ($profile && $profile->vision) ? nl2br(e($profile->vision)) : 'Visi sekolah belum diisi.' !!}
                 </div>
             </div>
 
@@ -54,13 +54,13 @@
                     <h3 class="text-3xl font-bold text-gray-800">Misi</h3>
                 </div>
                 <div class="text-gray-700 leading-relaxed text-lg">
-                    {{ $profile->mission ?? 'Misi sekolah belum diisi.' }}
+                    {{ ($profile && $profile->mission) ? $profile->mission : 'Misi sekolah belum diisi.' }}
                 </div>
             </div>
         </div>
 
         {{-- School Gallery --}}
-        @if($profile->gallery && count($profile->gallery) > 0)
+        @if($profile && $profile->gallery && is_array($profile->gallery) && count($profile->gallery) > 0)
         <div class="mb-20">
             <div class="bg-white rounded-2xl shadow-xl p-8 lg:p-12">
                 {{-- Gallery Header --}}

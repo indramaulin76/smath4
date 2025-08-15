@@ -25,6 +25,21 @@ class HomeController extends Controller
             
         $teachers = Teacher::all();
         $profile = Profile::first();
+        
+        // Create default profile if none exists
+        if (!$profile) {
+            $profile = Profile::create([
+                'school_name' => 'SMA Tunas Harapan',
+                'about' => 'SMA swasta ini didirikan pertama kali pada tahun 1987 oleh Yayasan Danar Dana Swadharma. Sekarang SMA Tunas Harapan memakai panduan kurikulum belajar SMA 2013 IPS dan sedang menuju penerapan kurikulum merdeka.',
+                'vision' => 'Menciptakan generasi muda yang berakhlakul mulia, unggul dalam IMTAQ, berkarakter dan santun dalam perilaku, berPrestasi dalam bidang akademik dan IPTEK',
+                'mission' => 'Memberikan pendidikan berkualitas tinggi yang mengembangkan potensi akademik, karakter, dan spiritual siswa.',
+                'gallery' => [],
+                'achievements' => [],
+                'facilities' => [],
+                'sections' => []
+            ]);
+        }
+        
         $services = Service::all();
 
         return view('welcome', compact('articles', 'teachers', 'profile', 'services'));
