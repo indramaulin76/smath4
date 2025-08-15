@@ -66,7 +66,7 @@ class TeacherResource extends Resource
                             ])
                             ->helperText('📋 REKOMENDASI FOTO GURU: Rasio 1:1 (Square), Resolusi 400x400px minimum, Max 3MB, Format JPG/PNG/WEBP, Background polos/formal, Pencahayaan terang dan jelas')
                             ->columnSpanFull()
-                            ->required(),
+                            ->nullable(),
                             
                         Forms\Components\RichEditor::make('description')
                             ->label('📋 Deskripsi / Bio Singkat')
