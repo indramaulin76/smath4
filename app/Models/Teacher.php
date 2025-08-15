@@ -28,7 +28,20 @@ class Teacher extends Model
     protected function photoUrl(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->photo ? asset('storage/' . $this->photo) : null,
+            get: function () {
+                if (!$this->photo) {
+                    return null;
+                }
+                
+                // For production, ensure the file exists
+                $storagePath = storage_path('app/public/' . $this->photo);
+                if (file_exists($storagePath)) {
+                    return asset('storage/' . $this->photo);
+                }
+                
+                // Fallback for development or if file doesn't exist
+                return asset('storage/' . $this->photo);
+            }
         );
     }
 }
