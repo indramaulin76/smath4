@@ -15,7 +15,7 @@
                         <!-- Photo Container with Fixed Aspect Ratio -->
                         <div class="relative w-full aspect-square overflow-hidden bg-gradient-to-br from-blue-50 to-gray-50">
                             @if($teacher->photo)
-                                <img src="{{ asset('storage/' . $teacher->photo) }}" 
+                                <img src="{{ $teacher->photo_url }}"
                                         class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
                                         alt="{{ $teacher->name ?? 'Teacher' }}"
                                         loading="lazy">

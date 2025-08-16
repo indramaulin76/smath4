@@ -15,7 +15,7 @@
                     <!-- Service Image -->
                     @if($service->image)
                         <div class="relative h-48 overflow-hidden">
-                            <img src="{{ Storage::url($service->image) }}" 
+                            <img src="{{ $service->image_url }}"
                                  alt="{{ $service->title }}"
                                  class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                                  loading="lazy">

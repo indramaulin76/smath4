@@ -10,7 +10,7 @@
         @foreach ($articles->where('is_published', true)->take(6) as $article)
             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
                 <div class="relative overflow-hidden aspect-video">
-                    <img src="{{ asset('storage/' . $article->image) }}" 
+                    <img src="{{ $article->image_url }}"
                          class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
                          alt="{{ $article->title }}">
                     <div class="absolute top-4 left-4">
