@@ -15,10 +15,10 @@
                         <!-- Photo Container with Fixed Aspect Ratio -->
                         <div class="relative w-full aspect-square overflow-hidden bg-gradient-to-br from-blue-50 to-gray-50">
                             @if($teacher->photo)
-                                <img src="{{ $teacher->photo_url }}"
-                                        class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
-                                        alt="{{ $teacher->name ?? 'Teacher' }}"
-                                        loading="lazy">
+                <img src="{{ asset('storage/' . basename($teacher->photo_url)) }}"
+                    class="w-full h-auto"
+                    alt="Teacher photo"
+                    loading="lazy">
                             @else
                                 <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-100 to-gray-100">
                                     <div class="text-center">

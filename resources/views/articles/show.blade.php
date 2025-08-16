@@ -7,9 +7,9 @@
             <!-- Article Header -->
             <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8 relative z-10">
                 <div class="relative h-64 md:h-[400px] lg:h-[500px] overflow-hidden">
-                    <img src="{{ asset('storage/' . $article->image) }}" 
-                         alt="{{ $article->title }}" 
-                         class="w-full h-full object-cover object-center md:object-top">
+                <img src="{{ asset('storage/' . $article->image) }}" 
+                    alt="Article image" 
+                    class="w-full h-auto">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 </div>
                 
@@ -42,10 +42,10 @@
                         @foreach($article->gallery as $image)
                             <div class="group relative overflow-hidden rounded-lg">
                                 <div class="aspect-[4/3] overflow-hidden">
-                                    <img src="{{ asset('storage/' . $image) }}" 
-                                         alt="Gallery Image" 
-                                         class="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-300 cursor-pointer"
-                                         onclick="openModal('{{ asset('storage/' . $image) }}')">
+                             <img src="{{ asset('storage/' . $image) }}" 
+                                 alt="Gallery image" 
+                                 class="w-full h-auto"
+                                 onclick="openModal('{{ asset('storage/' . $image) }}')">
                                 </div>
                                 <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 rounded-lg"></div>
                             </div>
@@ -105,9 +105,9 @@
                             <div class="group">
                                 <a href="{{ route('articles.show', $related) }}" class="block">
                                     <div class="aspect-[16/10] overflow-hidden rounded-lg mb-3">
-                                        <img src="{{ asset('storage/' . $related->image) }}" 
-                                             alt="{{ $related->title }}"
-                                             class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300">
+                                <img src="{{ asset('storage/' . $related->image) }}" 
+                                    alt="Article image"
+                                    class="w-full h-auto">
                                     </div>
                                     <h4 class="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors duration-200 line-clamp-2">
                                         {{ $related->title }}
@@ -136,7 +136,7 @@
 <!-- Modal for Gallery Images -->
 <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-75 hidden z-[9999] flex items-center justify-center p-4">
     <div class="relative max-w-4xl max-h-full">
-        <img id="modalImage" src="" alt="" class="max-w-full max-h-full object-contain rounded-lg">
+    <img id="modalImage" src="" alt="Modal image" class="w-full h-auto max-w-full max-h-full object-contain rounded-lg">
         <button onclick="closeModal()" 
                 class="absolute top-4 right-4 text-white bg-black bg-opacity-50 rounded-full p-2 hover:bg-opacity-75 transition-colors">
             <i class="fas fa-times"></i>

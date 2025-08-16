@@ -15,11 +15,9 @@
         <div class="mb-20">
             <div class="rounded-2xl shadow-xl overflow-hidden">
                 <div class="relative">
-                    <img src="/storage/{{ $profile->featured_image }}" 
-                         alt="Gambar Utama Sekolah" 
-                         class="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] object-cover"
-                         onerror="console.log('Featured image failed to load:', this.src); this.style.backgroundColor='#f3f4f6'; this.alt='Gambar tidak dapat dimuat';"
-                         onload="console.log('Featured image loaded successfully:', this.src)">
+                <img src="{{ asset('storage/' . $profile->featured_image) }}" 
+                    alt="Featured image" 
+                    class="w-full h-auto">
                 </div>
             </div>
         </div>
@@ -75,9 +73,9 @@
                     @foreach($profile->gallery as $index => $image)
                     <div class="group relative rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
                         <div class="aspect-w-16 aspect-h-12 relative">
-                            <img src="/storage/{{ $image }}" 
-                                 alt="Galeri Sekolah {{ $index + 1 }}" 
-                                 class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                       <img src="{{ asset('storage/' . $image) }}" 
+                           alt="Gallery image" 
+                           class="w-full h-auto"
                                  onerror="console.log('Gallery image failed:', this.src);"
                                  onload="console.log('Gallery image loaded:', this.src)">
                         </div>

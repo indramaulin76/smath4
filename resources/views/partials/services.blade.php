@@ -15,10 +15,10 @@
                     <!-- Service Image -->
                     @if($service->image)
                         <div class="relative h-48 overflow-hidden">
-                            <img src="{{ $service->image_url }}"
-                                 alt="{{ $service->title }}"
-                                 class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                                 loading="lazy">
+                       <img src="{{ asset('storage/' . basename($service->image_url)) }}"
+                           alt="Service image"
+                           class="w-full h-auto"
+                           loading="lazy">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                         </div>
                     @else

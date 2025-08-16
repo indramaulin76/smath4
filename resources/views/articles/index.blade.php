@@ -13,9 +13,9 @@
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                     <div class="relative overflow-hidden aspect-video">
                         @if($article->image)
-                            <img src="{{ asset('storage/' . $article->image) }}" 
-                                 class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
-                                 alt="{{ $article->title ?? 'Article Image' }}">
+                       <img src="{{ asset('storage/' . $article->image) }}" 
+                           class="w-full h-auto" 
+                           alt="Article image">
                         @else
                             <div class="w-full h-full bg-gray-200 flex items-center justify-center">
                                 <i class="fas fa-image text-gray-400 text-4xl"></i>

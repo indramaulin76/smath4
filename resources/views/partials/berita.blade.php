@@ -10,9 +10,9 @@
         @foreach ($articles->where('is_published', true)->take(6) as $article)
             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
                 <div class="relative overflow-hidden aspect-video">
-                    <img src="{{ $article->image_url }}"
-                         class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
-                         alt="{{ $article->title }}">
+                <img src="{{ asset('storage/' . basename($article->image_url)) }}"
+                    class="w-full h-auto" 
+                    alt="Article image">
                     <div class="absolute top-4 left-4">
                         <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
                             {{ $article->published_at ? $article->published_at->format('d M Y') : $article->created_at->format('d M Y') }}

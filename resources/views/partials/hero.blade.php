@@ -9,9 +9,9 @@
     <!-- Background Image (if exists) -->
     @if($heroSection && $heroSection->background_image)
         <div class="absolute inset-0 z-0">
-            <img src="{{ asset('storage/' . $heroSection->background_image) }}" 
-                 alt="Background" 
-                 class="w-full h-full object-cover">
+          <img src="{{ asset('storage/' . $heroSection->background_image) }}" 
+              alt="Background image" 
+              class="w-full h-auto">
             <div class="absolute inset-0 bg-black bg-opacity-40"></div>
         </div>
     @else
