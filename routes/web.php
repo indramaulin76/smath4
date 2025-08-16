@@ -4,7 +4,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ArticleController as PublicArticleController;
 use App\Http\Controllers\AdminTwoFactorController;
-use App\Http\Controllers\TestImageController;
 use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,9 +13,6 @@ Route::get('/articles/{article}', [PublicArticleController::class, 'show'])->nam
 
 // Contact form
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
-
-// Test image paths
-Route::get('/test-images', [TestImageController::class, 'test']);
 
 // Admin 2FA routes
 Route::middleware(['auth'])->group(function () {
