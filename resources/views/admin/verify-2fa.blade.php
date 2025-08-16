@@ -94,7 +94,7 @@
 </head>
 <body>
     <div class="verification-card">
-        <img src="{{ asset('images/logo-sma-tunas-harapan.png') }}" alt="SMA Tunas Harapan" class="logo">
+    <img src="{{ asset('LOGO-SMA.png') }}" alt="SMA Tunas Harapan" class="logo">
         
         <h2 style="text-align: center; margin-bottom: 0.5rem; color: #1f2937; font-size: 1.5rem;">🔐 Verifikasi Keamanan</h2>
         <p style="text-align: center; color: #6b7280; margin-bottom: 2rem; font-size: 0.9rem;">

@@ -9,7 +9,7 @@
     <title>SMA TUNAS HARAPAN</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="{{ asset('images/logo-sma-tunas-harapan.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('LOGO-SMA.png') }}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -113,8 +113,8 @@
         <header style="background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%); padding: 1rem 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
             <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem;">
                 <a href="{{ url('/') }}" style="display: flex; align-items: center; text-decoration: none; gap: 1rem;">
-                    <img src="{{ asset('images/logo-sma-tunas-harapan.png') }}" 
-                         alt="SMA Tunas Harapan Logo" 
+                <img src="{{ asset('LOGO-SMA.png') }}" 
+                    alt="SMA Tunas Harapan Logo" 
                          style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
                     <div style="display: flex; flex-direction: column;">
                         <span style="color: white; font-size: 22px; font-weight: 700; margin: 0; line-height: 1.2; font-family: 'Arial', sans-serif;">SMA TUNAS HARAPAN</span>
@@ -199,7 +199,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div>
                     <div class="flex items-center mb-4">
-                        <img src="{{ asset('images/logo-sma-tunas-harapan.png') }}" alt="SMA Tunas Harapan" class="h-12 mr-3">
+                        <img src="{{ asset('LOGO-SMA.png') }}" alt="SMA Tunas Harapan" class="h-12 mr-3">
                         <h3 class="text-lg font-bold">SMA TUNAS HARAPAN</h3>
                     </div>
                     @php
